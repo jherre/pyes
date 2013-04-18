@@ -68,7 +68,7 @@ class Search(EqualityComparableUsingAttributeDictionary):
     """
 
     def __init__(self, query=None, filter=None, fields=None, start=None,
-                 size=None, highlight=None, sort=None, explain=False, facet=None,
+                 size=None, highlight=None, sort=None, explain=False, terms=False, facet=None,
                  version=None, track_scores=None, script_fields=None, index_boost=None,
                  min_score=None, stats=None, bulk_read=None, partial_fields=None):
         """
@@ -83,6 +83,7 @@ class Search(EqualityComparableUsingAttributeDictionary):
         self._highlight = highlight
         self.sort = sort
         self.explain = explain
+        self.terms = terms
         self.facet = facet or FacetFactory()
         self.version = version
         self.track_scores = track_scores
@@ -125,6 +126,8 @@ class Search(EqualityComparableUsingAttributeDictionary):
             res['sort'] = self.sort
         if self.explain:
             res['explain'] = self.explain
+        if self.terms:
+            res['terms'] = self.terms
         if self.version:
             res['version'] = self.version
         if self.track_scores:
